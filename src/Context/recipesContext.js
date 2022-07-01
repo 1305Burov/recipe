@@ -6,6 +6,7 @@ const recipesList = [
     {
         id: 1, 
         name: 'Some name',
+        method: 'build',
         ingredients: [
             {
                 name: 'some ingredient 1',
@@ -20,6 +21,7 @@ const recipesList = [
     {
         id: 2, 
         name: 'Some name 2',
+        method: 'build',
         ingredients: [
             {
                 name: 'some ingredient 1',
@@ -34,7 +36,8 @@ const recipesList = [
                 amount: '1 piece'
             }
         ]
-    }
+    },
+    
 ]
 
 export default function RecipesProvider ({ children }) {

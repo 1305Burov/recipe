@@ -1,18 +1,31 @@
+import { Suspense } from 'react';
+import { Routes, Route, Link } from 'react-router-dom';
+
 import RecipesProvider from "./Context/recipesContext";
 import { RecipesList } from './Components/RecipesList/RecipesList';
 import AddRecipe from "./Components/AddRecipe/AddRecipe";
-
-
+ 
 export default function App() {
     return (
         <>
             <header className="container header">
-                <h1><a href="/" className="logo">Recipes</a></h1>
+                <h1><Link to="/" className="header__logo">Recipes</Link></h1>
+                <Link to="/adding" className="header__adding-link">Add Recipe</Link> 
             </header>
             <RecipesProvider>
+               
                 <section className="container recipes">
-                    <AddRecipe />
-                    <RecipesList />
+                    <Routes>
+                        <Route path="/adding" 
+                        element={
+                            <Suspense>
+                                <AddRecipe />
+                            </Suspense>
+                        } />
+                        <Route path="/" element={
+                            <RecipesList />
+                        }/>
+                    </Routes>
                 </section>
             </RecipesProvider>
         </>
