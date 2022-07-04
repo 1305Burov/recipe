@@ -3,7 +3,7 @@ import { Recipe } from '../Recipe/Recipe';
  
 export const RecipesList = () => {
     const [recipes] = useRecipes();
-    
+
     return (
         <>
             {recipes.map((recipe) => {

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecipes } from '../../hooks/useRecipes';
+import { createRecipe } from '../../api/recipes';
+
 import shake from '../../img/Shake.png';
 import build from '../../img/Build.svg'; 
 import stir from '../../img/Stir.svg'; 
@@ -24,7 +26,7 @@ const AddRecipe = () => {
                     ...p,
                     {
                         name,
-                        amount : amount + measuring
+                        amount : Number(amount) + measuring
                     }
                 ]
             }else {
@@ -50,18 +52,21 @@ const AddRecipe = () => {
     function addRecipe(e) {
         e.preventDefault();
         if (ingredients.length > 0) {
-            setRecipes(p => {
-                return [
-                    ...p,
-                    {
-                        id: Date.now(),
-                        name: e.target.name.value.trim(),
-                        method: e.target.method.value || 'Build',
-                        ingredients
-                    }
-                ]
-            })
-    
+            const newRecipe = {
+                name: e.target.name.value.trim(),
+                method: e.target.method.value || 'Build',
+                ingredients
+            }
+
+            createRecipe(newRecipe)
+                .then((newRecipe) => {
+                    setRecipes(p => [...p, newRecipe]);
+                })
+                .catch((err) => {
+                    alert('Something wrong! Try again later.');
+                    console.error(err);
+                })
+            
             navigate('/');
         }
     }
@@ -85,7 +90,7 @@ const AddRecipe = () => {
                         <img className='form__radio__img' draggable='false' src={stir} alt="Stir" />
                     </label>
                 </div>
-                <input className='form__input form__input__recipe' type="text" name='name' placeholder='Recipe name' required />
+                <input className='form__input form__input__recipe' type="text" name='name' placeholder='Recipe name' autoComplete="off" required />
                 <button className='form__button-add-rec' type='submit'>Add Recipe</button>
             </form>
 
@@ -94,8 +99,8 @@ const AddRecipe = () => {
             })}
 
             <form className='form__form' action='#' onSubmit={addIng}>
-                <input className='form__input' type="text" name='ing' placeholder='Ingredient' required />
-                <input className='form__input' type="number" name='amt' placeholder='Amount' required />
+                <input className='form__input' type="text" name='ing' placeholder='Ingredient' autoComplete="off" required />
+                <input className='form__input' type="number" name='amt' placeholder='Amount' autoComplete="off" required />
                 <select className='form__input form__select' type="select" name='measuring' required>
                     <option value=" ml" defaultValue>ml</option>
                     <option value=" dash" >dash</option>

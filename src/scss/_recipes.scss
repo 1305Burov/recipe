@@ -5,9 +5,46 @@
     gap: 30px;
     &__card {
         margin: 40px 0;
-        padding: 0 20px 20px 20px;
         background-color: #faf2eb;
-        border: 1px solid #FF9900;
+        border: 1px solid peachpuff;
         border-radius: 10px;
+        cursor: pointer;
+    }
+    &__title {
+        & > a {
+            padding: 20px;
+            color: #ff9900;
+            text-decoration: none;
+        }
+    }
+    &__list {
+        padding: 0;
+    }
+    & .list {
+        &__item {
+            list-style: none;
+            &::before {
+                content: "\2022";  
+                color: #FF9900;
+                font-weight: bold;  
+                display: inline-block;  
+                width: 1em;  
+            }
+        } 
+    }
+
+    &__delete {
+        padding: 10px;
+        background-color: #ff3c00;
+        border-radius: 5px;
+        font-weight: 600;
+        color: #fff;
+        transition: background-color .5s ease;
+        &:hover {
+            background-color: #dd3603;
+        }
+        &:active {
+            background-color: #ff3c00;
+        }
     }
 }

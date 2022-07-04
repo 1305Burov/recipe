@@ -1,47 +1,19 @@
-import {createContext, useState} from 'react';
+import { createContext, useState, useEffect } from 'react';
+import { getRecipes } from '../api/recipes';
 
 export const RecipesContext = createContext();
 
-const recipesList = [
-    {
-        id: 1, 
-        name: 'Some name',
-        method: 'build',
-        ingredients: [
-            {
-                name: 'some ingredient 1',
-                amount: '20 ml'
-            },
-            {
-                name: 'some ingredient 2',
-                amount: '40 ml'
-            }
-        ]
-    },
-    {
-        id: 2, 
-        name: 'Some name 2',
-        method: 'build',
-        ingredients: [
-            {
-                name: 'some ingredient 1',
-                amount: '200 ml'
-            },
-            {
-                name: 'some ingredient 2',
-                amount: '80 ml'
-            },
-            {
-                name: 'some ingredient 3',
-                amount: '1 piece'
-            }
-        ]
-    },
-    
-]
-
 export default function RecipesProvider ({ children }) {
-    const [recipes, setRecipes] = useState(recipesList);
+    const [recipes, setRecipes] = useState([]);
+
+    useEffect(() => {
+        getRecipes()
+            .then((recipes) => setRecipes(recipes))
+            .catch((error) => {
+                alert('Something wrong! Try again later.');
+                console.error(error);
+            });
+    }, []);
 
     return (
         <RecipesContext.Provider value={[recipes, setRecipes]}>

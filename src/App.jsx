@@ -4,6 +4,8 @@ import { Routes, Route, Link } from 'react-router-dom';
 import RecipesProvider from "./Context/recipesContext";
 import { RecipesList } from './Components/RecipesList/RecipesList';
 import AddRecipe from "./Components/AddRecipe/AddRecipe";
+import RecipeData from './Components/RecipeData/RecipeData';
+
  
 export default function App() {
     return (
@@ -16,6 +18,15 @@ export default function App() {
                
                 <section className="container recipes">
                     <Routes>
+                        <Route
+                            path="/recipe/:recipeId"
+                            element={
+                                <Suspense>
+                                    <RecipeData />
+                                </Suspense>
+                            }
+                        />
+
                         <Route path="/adding" 
                         element={
                             <Suspense>
