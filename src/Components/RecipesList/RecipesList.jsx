@@ -9,6 +9,8 @@ export const RecipesList = () => {
             {recipes.map((recipe) => {
                 return <Recipe key={recipe.id} recipe={recipe} />
             })}
+
+            {recipes.length > 0 ? '' : <h2 className='empty-page-header'>Add your first recipe...</h2>}
         </>
     );
 }

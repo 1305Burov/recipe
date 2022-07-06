@@ -2,9 +2,10 @@
     display: flex;
     align-items: flex-start;
     flex-wrap: wrap;
-    gap: 30px;
+    gap: 20px;
+    margin: 40px auto;
     &__card {
-        margin: 40px 0;
+        flex: 1 1 auto;
         background-color: #faf2eb;
         border: 1px solid peachpuff;
         border-radius: 10px;
@@ -16,6 +17,15 @@
             color: #ff9900;
             text-decoration: none;
         }
+    }
+    &__link {
+        display: block;
+        padding: 20px;
+        font-weight: 600;
+        font-size: 24px;
+        color: #ff9900;
+        text-align: center;
+        text-decoration: none;
     }
     &__list {
         padding: 0;
@@ -34,6 +44,7 @@
     }
 
     &__delete {
+        margin: 40px 0;
         padding: 10px;
         background-color: #ff3c00;
         border-radius: 5px;
@@ -46,5 +57,7 @@
         &:active {
             background-color: #ff3c00;
         }
+
     }
+
 }

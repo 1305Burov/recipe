@@ -66,9 +66,8 @@ const AddRecipe = () => {
                     alert('Something wrong! Try again later.');
                     console.error(err);
                 })
-            
-            navigate('/');
-        }
+                navigate('/');
+            }
     }
 
     return (
