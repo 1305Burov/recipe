@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 
-
 export const Recipe = ({recipe}) => {
     return (
         <div className="recipes__card">

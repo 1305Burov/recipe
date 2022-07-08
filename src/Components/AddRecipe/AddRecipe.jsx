@@ -1,16 +1,17 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useRecipes } from '../../hooks/useRecipes';
+import { addRecipeAction } from '../../store/recipes/actionCreators';
 import { createRecipe } from '../../api/recipes';
-
 import shake from '../../img/Shake.png';
 import build from '../../img/Build.svg'; 
 import stir from '../../img/Stir.svg'; 
+import { newRecipeThunk } from '../../store/recipes/thunk';
  
 const AddRecipe = () => {
-    const [ingredients, setIngredients] = useState([]);
-    const [, setRecipes] = useRecipes();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [ingredients, setIngredients] = useState([]);
 
     function addIng(e) {
         e.preventDefault();
@@ -46,7 +47,6 @@ const AddRecipe = () => {
         setIngredients(p => {
             return [...p.filter((i) => `${i.name} - ${i.amount}` !== removeIng)]
         })
-
     }
 
     function addRecipe(e) {
@@ -58,16 +58,8 @@ const AddRecipe = () => {
                 ingredients
             }
 
-            createRecipe(newRecipe)
-                .then((newRecipe) => {
-                    setRecipes(p => [...p, newRecipe]);
-                })
-                .catch((err) => {
-                    alert('Something wrong! Try again later.');
-                    console.error(err);
-                })
-                navigate('/');
-            }
+            dispatch(newRecipeThunk(newRecipe, navigate));
+        }
     }
 
     return (

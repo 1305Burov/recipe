@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { deleteRecipe, getRecipe } from '../../api/recipes';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useRecipes } from '../../hooks/useRecipes';
+import { removeRecipeAction } from '../../store/recipes/actionCreators';
+import { removeRecipeThunk } from '../../store/recipes/thunk';
 
 
 export default function RecipeData() {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const { recipeId } = useParams();
     const [recipe, setRecipe] = useState({});
-    const [, setRecipes] = useRecipes();
 
     useEffect(() => {
     if (recipeId) {
@@ -22,24 +24,14 @@ export default function RecipeData() {
     }, [recipeId]);
     
     const removeRecipe = () => {
-        deleteRecipe(recipe.id)
-            .then(() => {
-                setRecipes((p) => {
-                    return [...p.filter((r) => r.id !== recipe.id)];
-                })
-            })
-            .catch((err) => {
-                console.error(err);
-            })
-            
-            navigate('/');
+        dispatch(removeRecipeThunk(navigate, Number(recipe.id)));
     }
 
     if (!recipe) {
-    return <h1>Not found!</h1>;
+        return <h1>Not found!</h1>;
     }
     if (!recipe.id) {
-    return <h1>Loading...</h1>;
+        return <h1>Loading...</h1>;
     }
 
     return (
